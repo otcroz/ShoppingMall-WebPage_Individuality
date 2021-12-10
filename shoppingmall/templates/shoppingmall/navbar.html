@@ -1,0 +1,89 @@
+
+<!--navbar-->
+<div class="container">
+<nav class=" navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">INDIVIDUALITY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav"> <!--여기에 mr-auto를 주어도 같은 결과-->
+                <li class="nav-item">
+                    <a class="nav-link" href="/goods/">ALL GOODS </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/goods/manufacturer/earpearp">EARPEARP</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/goods/manufacturer/168cm">168CM</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/goods/manufacturer/the-nine-mall">THE NINE MALL</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/introduce/">Introduce</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto"> <!--ml-auto 왼쪽 margin을 최대로-->
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if user.socialaccount_set.all.0.get_avatar_url %} <!--0번째에 해당하는 소셜 아바타-->
+                        <img class="rounded-circle" width="25px"
+                            src="{{user.socialaccount_set.all.0.get_avatar_url}}">
+                        {% else %}
+                        <img class="rounded-circle" width="25px"
+                             src="https://doitdjango.com/avatar/id/389/0bb9b17cd7ab4167/svg/{{user.email}}/">
+                        {% endif %}
+                        {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <a role="button" class="btn btn-primary" href="/accounts/logout/">
+                        Log Out
+                       </a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <!-- Button trigger modal -->
+                    <a role="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+                        Log In
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <a role="button" class="btn btn-outline-dark btn-block btn-sm"
+                    href="#">
+                        <i class="fab fa-google"></i>&nbsp;&nbsp;Log In with Google
+                    </a>
+                    <a rloe="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login/"><i class="far fa-envelope"></i>&nbsp;&nbsp;Log in with E-mail</a>
+                </div>
+                <div class="col-md-6">
+                    <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/signup/"><i class="far fa-envelope"></i>&nbsp;&nbsp;Sign Up with E-mail</a>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+</div>

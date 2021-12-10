@@ -1,0 +1,103 @@
+{% extends 'shoppingmall/base.html' %}
+
+
+{% block head_title %}
+    {{ goods.name }}
+{% endblock %}
+
+{% block main_area %}
+<!-- Post content--> <!--포스트 하나의 내용-->
+<div id="post-area">
+    <!-- Post header-->
+    <header class="mb-4">
+        {% if goods.manufacturer %}
+            <span class="badge badge-secondary float-right">{{goods.manufacturer}}</span>
+        {% else %}
+            <span class="badge badge-secondary float-right">미분류</span>
+        {% endif %}
+        <!-- Post title-->
+        <h1 class="fw-bolder mb-1">{{ goods.name }}</h1>
+        <!-- Post meta content-->
+        <div class="text-muted fst-italic mb-2">
+            Posted on {{ goods.created_at | date:"y-m-d h:m:s" }}
+            by {{goods.author | upper}}</div> <!--템플릿 필터로 적용-->
+            {% if user.is_authenticated and user == goods.author %}
+                <a href="/blog/update_post/{{post.pk}}/"
+                class="btn btn-info btn-small float-right">
+                    <i class="fas fa-pen"></i>
+                     Edit Post
+                </a>
+            {% endif %}
+    </header>
+    <!-- Preview images figure-->
+    <figure class="mb-4">
+        {% if goods.head_image %} <!--이미지가 존재-->
+            <img class="img-fluid rounded" src="{{ goods.image.url }}" alt="{{goods.name}}의 image" />
+        {% else %}
+            <img class="img-fluid rounded" src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random image"> <!--랜덤 이미지 / post.id로 id마다 이미지 유지-->
+        {% endif %}
+    </figure>
+    <!-- Post content-->
+    <section class="mb-5">
+        <p>{{ goods.get_content_markdown | safe }}</p>
+            {% if goods.tags.exists %}
+                <i class="fas fa-tags"></i>
+                {% for tag in post.tags.all %}
+                    <a href="tag.get_absolute_url"><span class="badge badge-light">{{ tag }}</span></a>
+                {% endfor %}
+                <br/><br/>
+            {% endif %}
+        {% if goods.file_upload %} <!--파일 다운로드 버튼--> <!--파일이 존재할 때,-->
+        <a href="{{post.file_upload.url}}" class="btn btn-dark" role="button" download> <!--download: 파일을 다운할 수 있음-->
+            Download :
+            {% if goods.get_file_ext == 'xlsx' or goods.get_file_ext == 'xls' %} <!--models에 있는 확장자 함수, 확장자 나누기-->
+                <i class="fas fa-file-excel"></i>
+            {% elif goods.get_file_ext == 'docx' or goods.get_file_ext == 'dox' %}
+                <i class="fas fa-file-word"></i>
+            {% else %}
+                <i class="fas fa-file"></i>
+            {% endif %}
+            {{ post.get_file_name }} <!--파일 이름 출력-->
+        </a>
+        {% endif %}
+    </section>
+</div>
+<!-- Comments section-->
+<div class="mb-5" id="comment-area">
+    <div class="card bg-light">
+        <div class="card-body">
+            <!-- Comment form-->
+            {% if user.is_authenticated %}
+            <form class="mb-4" id="comment-form" method="POST" action="{{post.get_absolute_url}}new_comment/">
+                {% csrf_token %}
+                <div class="form-group">
+
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% else %}
+            <a role="botton" class="btn btn-outline-dark" href="#"
+            data-toggle="modal" data-target="#loginModal">
+                Log in and leave a comment
+            </a>
+            {% endif %}
+            <!-- Single comment-->
+            {% if goods.comment_set.exists %}
+            {% for comment in goods.comment_set.all %}
+            <div class="d-flex" id="comment-{{comment.pk}}">
+                <div class="flex-shrink-0">
+                    <img class="rounded-circle" src="{{ comment.get_avatar_url }}" alt="{{ comment.author }}" width="60px" />
+                </div>
+                <div class="ms-3">
+                    <div class="fw-bold">{{comment.author.username}} &nbsp;&nbsp;&nbsp;
+                        <small class="text-muted">{{comment.created_at}}</small></div>
+                    <p>{{ comment.content | linebreaks }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
