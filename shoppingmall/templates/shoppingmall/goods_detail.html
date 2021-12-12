@@ -13,7 +13,7 @@
         {% if goods.manufacturer %}
             <span class="badge badge-secondary float-right">{{goods.manufacturer}}</span>
         {% else %}
-            <span class="badge badge-secondary float-right">미분류</span>
+            <span class="badge badge-secondary float-right">OTHER THINGS</span>
         {% endif %}
         <!-- Post title-->
         <h1 class="fw-bolder mb-1">{{ goods.name }}</h1>
@@ -43,19 +43,6 @@
                 {% endfor %}
                 <br/><br/>
             {% endif %}
-        {% if goods.file_upload %} <!--파일 다운로드 버튼--> <!--파일이 존재할 때,-->
-        <a href="{{post.file_upload.url}}" class="btn btn-dark" role="button" download> <!--download: 파일을 다운할 수 있음-->
-            Download :
-            {% if goods.get_file_ext == 'xlsx' or goods.get_file_ext == 'xls' %} <!--models에 있는 확장자 함수, 확장자 나누기-->
-                <i class="fas fa-file-excel"></i>
-            {% elif goods.get_file_ext == 'docx' or goods.get_file_ext == 'dox' %}
-                <i class="fas fa-file-word"></i>
-            {% else %}
-                <i class="fas fa-file"></i>
-            {% endif %}
-            {{ post.get_file_name }} <!--파일 이름 출력-->
-        </a>
-        {% endif %}
     </section>
 </div>
 <!-- Comments section-->

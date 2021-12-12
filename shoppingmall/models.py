@@ -8,7 +8,20 @@ import os
 # Create your models here.
 
 
-class Manufacturer(models.Model): # 제조사(브랜드) / 카테고리
+class CaseType(models.Model):  # 케이스 종류 / 카테고리
+    type = models.CharField(max_length=50, unique=True)  # unique=True: 동일한 이름의 카테고리가 등록되지 않도록
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.type
+
+    def get_absolute_url(self):
+        return f'/goods/casetype/{self.slug}'
+
+
+
+
+class Manufacturer(models.Model): # 제조사(브랜드) / 다대일 관계
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
     address = models.CharField(max_length=50)
@@ -25,7 +38,7 @@ class Manufacturer(models.Model): # 제조사(브랜드) / 카테고리
     class Meta:  # 모델의 이름 수정
         verbose_name_plural = 'Manufacturers'
 
-class PhoneModel(models.Model): # 기종 / 태그
+class PhoneModel(models.Model): # 기종 / 다대다 관계
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
@@ -39,9 +52,11 @@ class Goods(models.Model): # 상품
     name = models.CharField(max_length=50)  # 이름
     image = models.ImageField(upload_to='blog/images/', blank=True) # 이미지
     price = models.CharField(max_length=15)  # 가격
+
+    case_type = models.ForeignKey(CaseType, null=True, on_delete=models.SET_NULL, blank=True)  # 케이스 종류
     delivery_fee = models.CharField(max_length=15, blank=True)  # 배송비
-    brief_content = models.CharField(max_length=100)
-    content = MarkdownxField()
+    brief_content = models.CharField(max_length=100) # 간단한 내용(내용 요약)
+    content = MarkdownxField() # 내용
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -64,7 +79,7 @@ class Goods(models.Model): # 상품
     def get_content_markdown(self):  # content 내용을 markdowm으로 변경
         return markdown(self.content)
 
-class Comment(models.Model): # 댓글 모델
+class Comment(models.Model): # 댓글
     goods = models.ForeignKey(Goods, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()

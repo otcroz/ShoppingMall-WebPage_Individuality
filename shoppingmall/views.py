@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView  # CBV 형식
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Goods, PhoneModel, Manufacturer
+from .models import Goods, PhoneModel, Manufacturer, CaseType
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -98,8 +98,11 @@ class GoodsList(ListView):
     paginate_by = 9
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(GoodsList, self).get_context_data()  # super가 가지고 있는 것을 상송
+        context = super(GoodsList, self).get_context_data()
         context['manufacturers'] = Manufacturer.objects.all()
+        context['casetypes'] = CaseType.objects.all()
+        context['no_casetype_goods_count'] = Goods.objects.filter(case_type=None).count()
+
         return context
 
 # 상품 상세
@@ -107,11 +110,12 @@ class GoodsDetail(DetailView):
     model = Goods
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(GoodsDetail, self).get_context_data()  # super가 가지고 있는 것을 상송
+        context = super(GoodsDetail, self).get_context_data()
         context['manufacturers'] = Manufacturer.objects.all()
+        context['casetypes'] = CaseType.objects.all()
+        context['no_casetype_goods_count'] = Goods.objects.filter(case_type=None).count()
         context['comment_form'] = CommentForm
 
-        # context['comment_form'] = CommentForm
         return context
 
 class GoodsSearch(GoodsList) :
@@ -131,12 +135,8 @@ class GoodsSearch(GoodsList) :
         return context
 
 def category_page(request, slug):
-    if slug == 'no_manufacturer': #수정
-        manufacturer = '미분류'
-        goods_list = Goods.objects.filter(manufacturer=None)
-    else:
-        manufacturer = Manufacturer.objects.get(slug=slug)
-        goods_list = Goods.objects.filter(manufacturer=manufacturer)
+    manufacturer = Manufacturer.objects.get(slug=slug)
+    goods_list = Goods.objects.filter(manufacturer=manufacturer)
 
     return render(request, 'shoppingmall/goods_list.html',
                   {
@@ -145,6 +145,24 @@ def category_page(request, slug):
                       'manufacturer': manufacturer
                   }
                   )
+
+def casetype_page(request, slug):
+    if slug == 'no_casetype':
+        casetype = 'OTHER THINGS'
+        goods_list = Goods.objects.filter(case_type=None)
+    else:
+        casetype = CaseType.objects.get(slug=slug)
+        goods_list = Goods.objects.filter(case_type=casetype)
+
+    return render(request, 'shoppingmall/goods_list.html',
+                  {
+                      'goods_list': goods_list,
+                      'casetypes': CaseType.objects.all(),
+                      'no_casetype_goods_count': Goods.objects.filter(case_type=None).count(),
+                      'casetype': casetype
+                  }
+                  )
+
 def tag_page(request, slug):
     phonemodel = PhoneModel.objects.get(slug=slug)
     goods_list = phonemodel.post_set.all()  # Post.objects.filter(tags=tag)

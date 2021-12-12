@@ -34,11 +34,20 @@
                             <li>
                                 <a href="/goods/">ALL GOODS </a>  <!--전체 게시물 수-->
                             </li>
-                            {% for c in manufacturers %}
+                            {% for m in manufacturers %}
                             <li>
-                                <a href="{{ c.get_absolute_url }}">{{c}} ({{c.goods_set.count}})</a>
-                            </li> <!--카테고리, 해당하는 포스트 수-->
+                                <a href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
+                            </li>
                             {% endfor %}
+                            <hr>
+                            {% for m in casetypes %}
+                            <li>
+                                <a href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
+                            </li>
+                            {% endfor %}
+                            <li>
+                                <a href="http://127.0.0.1:8000/goods/casetype/no_casetype">OTHER THINGS ({{no_casetype_goods_count}})</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
