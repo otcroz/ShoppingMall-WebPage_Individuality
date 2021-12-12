@@ -13,3 +13,6 @@ def landing(request):
 
 def introduce(request):
     return render(request, 'home/introduce.html')
+
+def mypage(request):
+    return render(request, 'home/mypage.html')

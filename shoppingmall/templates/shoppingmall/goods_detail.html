@@ -27,7 +27,7 @@
     </header>
     <!-- Preview images figure-->
     <figure class="mb-4">
-        {% if goods.head_image %} <!--이미지가 존재-->
+        {% if goods.image %} <!--이미지가 존재-->
             <img class="img-fluid rounded" src="{{ goods.image.url }}" alt="{{goods.name}}의 image" />
         {% else %}
             <img class="img-fluid rounded" src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random image"> <!--랜덤 이미지 / post.id로 id마다 이미지 유지-->

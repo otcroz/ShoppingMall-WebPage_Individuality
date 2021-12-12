@@ -8,9 +8,13 @@ import os
 # Create your models here.
 
 
-class Manufacturer(models.Model): # 기종 / 태그
+class Manufacturer(models.Model): # 제조사(브랜드) / 카테고리
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+    address = models.CharField(max_length=50)
+    contact = models.CharField(max_length=20)
+    homepage = models.CharField(max_length=70)
+    email = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -21,7 +25,7 @@ class Manufacturer(models.Model): # 기종 / 태그
     class Meta:  # 모델의 이름 수정
         verbose_name_plural = 'Manufacturers'
 
-class PhoneModel(models.Model): # 제조사(브랜드) / 카테고리
+class PhoneModel(models.Model): # 기종 / 태그
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
@@ -36,8 +40,8 @@ class Goods(models.Model): # 상품
     image = models.ImageField(upload_to='blog/images/', blank=True) # 이미지
     price = models.CharField(max_length=15)  # 가격
     delivery_fee = models.CharField(max_length=15, blank=True)  # 배송비
+    brief_content = models.CharField(max_length=100)
     content = MarkdownxField()
-
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

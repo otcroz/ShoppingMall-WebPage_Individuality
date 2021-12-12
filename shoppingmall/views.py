@@ -114,6 +114,22 @@ class GoodsDetail(DetailView):
         # context['comment_form'] = CommentForm
         return context
 
+class GoodsSearch(GoodsList) :
+    paginate_by = None
+
+    def get_queryset(self):
+        q = self.kwargs['q']
+        goods_list = Goods.objects.filter(
+            Q(name__contains=q) |  Q(PhoneModel__name__contains=q)
+        ).distinct()
+        return goods_list
+    def get_context_data(self, **kwargs):
+        context = super(GoodsSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q}({self.get_queryset().count()})'
+
+        return context
+
 def category_page(request, slug):
     if slug == 'no_manufacturer': #수정
         manufacturer = '미분류'
