@@ -1,15 +1,16 @@
 from django.contrib import admin
-
+from markdownx.admin import MarkdownxModelAdmin
 # Register your models here.
-from shoppingmall.models import Goods, PhoneModel, Manufacturer
+from shoppingmall.models import Goods, PhoneModel, Manufacturer, Comment
 
-admin.site.register(Goods)
+admin.site.register(Goods, MarkdownxModelAdmin)
+admin.site.register(Comment)
 
 class CategorAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}  # Category 이름을 입력하면 자동으로 slug를 입력
+    prepopulated_fields = {'slug': ('name',)}
 
 class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',)}
 
-admin.site.register(PhoneModel, CategorAdmin)
-admin.site.register(Manufacturer,TagAdmin)
+admin.site.register(PhoneModel, TagAdmin)
+admin.site.register(Manufacturer, CategorAdmin)

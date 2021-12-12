@@ -1,5 +1,5 @@
 {% extends 'shoppingmall/base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     {{ goods.name }}
@@ -17,12 +17,8 @@
         {% endif %}
         <!-- Post title-->
         <h1 class="fw-bolder mb-1">{{ goods.name }}</h1>
-        <!-- Post meta content-->
-        <div class="text-muted fst-italic mb-2">
-            Posted on {{ goods.created_at | date:"y-m-d h:m:s" }}
-            by {{goods.author | upper}}</div> <!--템플릿 필터로 적용-->
             {% if user.is_authenticated and user == goods.author %}
-                <a href="/blog/update_post/{{post.pk}}/"
+                <a href="/goods/update_post/{{goods.pk}}/"
                 class="btn btn-info btn-small float-right">
                     <i class="fas fa-pen"></i>
                      Edit Post
@@ -68,10 +64,10 @@
         <div class="card-body">
             <!-- Comment form-->
             {% if user.is_authenticated %}
-            <form class="mb-4" id="comment-form" method="POST" action="{{post.get_absolute_url}}new_comment/">
+            <form class="mb-4" id="comment-form" method="POST" action="{{goods.get_absolute_url}}new_comment/">
                 {% csrf_token %}
                 <div class="form-group">
-
+                    {{ comment_form | crispy }}
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

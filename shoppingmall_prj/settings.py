@@ -37,13 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'crispy_forms',
-    #'markdownx',
-    #'django.contrib.sites',  # allauth
-    #'allauth',
-    #'allauth.account',
-    #'allauth.socialaccount',
-    #'allauth.socialaccount.providers.google',
+    'crispy_forms',
+    'markdownx',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'shoppingmall',
     'home',
 ]
@@ -108,10 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#AUTHENTICATION_BACKENDS=(
-#    'django.contrib.auth.backends.ModelBackend',
-#    'allauth.account.auth_backends.AuthenticationBackend',
-#)
+AUTHENTICATION_BACKENDS=(
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 SITE_ID = 1
 
@@ -119,7 +119,7 @@ SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-LOGIN_REDIRECT_URL = '/goods/'  # 로그인이 되었을 때 사용자에게 전달하는 주소
+LOGIN_REDIRECT_URL = '/shoppingmall/'  # 로그인이 되었을 때 사용자에게 전달하는 주소
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

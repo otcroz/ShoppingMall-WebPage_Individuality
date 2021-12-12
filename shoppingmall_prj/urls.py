@@ -23,8 +23,8 @@ urlpatterns = [  # 각 앱에 urls.py 생성
     path('goods/', include('shoppingmall.urls')),
     path('admin/', admin.site.urls),  # 서버IP/admin  # 원래 있던 설정
     path('', include('home.urls')),  # 서버IP/
-    #path('accounts/', include('allauth.urls')),
-    #path('markdownx/', include('markdownx.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('markdownx/', include('markdownx.urls')),
 ]
 
 # media url 설정

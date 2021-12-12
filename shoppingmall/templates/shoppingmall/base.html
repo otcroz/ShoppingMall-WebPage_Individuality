@@ -39,16 +39,7 @@
                                 <a href="{{ c.get_absolute_url }}">{{c}} ({{c.goods_set.count}})</a>
                             </li> <!--카테고리, 해당하는 포스트 수-->
                             {% endfor %}
-                            <li>
-                                <a href="http://127.0.0.1:8000/goods/manufacturer/no_manufacturer">미분류 ({{no_manufacturer_goods_count}})</a>
-                            </li>
                         </ul>
-                    </div>
-                    <hr>
-                    <div>
-                        {% for c in tag %}
-
-                        {% endfor %}
                     </div>
                 </div>
             </div>
