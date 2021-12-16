@@ -118,9 +118,7 @@ SITE_ID = 1
 # 로그인 시 이메일을 받는다
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-
-LOGIN_REDIRECT_URL = '/shoppingmall/'  # 로그인이 되었을 때 사용자에게 전달하는 주소
-
+LOGIN_REDIRECT_URL = '/goods/'
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 

@@ -29,16 +29,11 @@
                 <img class="card-img-top" src="https://picsum.photos/seed/{{p.id}}/800/200" alt="random image" /> <!--p.id로 고유한 값을 줌, 아이디에 대한 이미지 고정-->
             {% endif %}
             <div class="card-body">
-                {% if p.manufacturer %} <!--조건: 카테고리-->
-                    <span class="badge badge-secondary">{{p.manufacturer}}</span>  <!--float-right: 오른쪽에 배치-->
-                {% else %}
-                    <span class="badge badge-secondary">OTHER THINGS</span>
-                {% endif %}
-                    <h3 class="card-title h5">{{ p.name | upper }}</h3> <!--템플릿 필터: 대문자로 보이게 / lower : 소문자-->
-                {% if p.price %}
-                    <h6 class="text-muted float-bottm">{{ p.price }} won</h6> <!--text-muted : 회색-->
-                {% endif %}
-                <p class="card-text">{{ p.get_content_markdown | truncatewords_html:50 | safe }}</p> <!--truncatewords:45 : 45개 단어 출력-->
+                <span class="badge badge-secondary">{{p.manufacturer}}</span>
+                <h3 class="card-title h5">{{ p.name | upper }}</h3>
+                <p class="card-text">{{ p.brief_content }}</p> <!--truncatewords:45 : 45개 단어 출력-->
+                <h6 class="text-muted float-bottom">{{ p.price }} won</h6>
+
             </div>
             </a>
         </div>

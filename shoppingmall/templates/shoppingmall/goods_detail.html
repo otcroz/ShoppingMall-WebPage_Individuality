@@ -11,9 +11,9 @@
     <!-- Post header-->
     <header class="mb-4">
         {% if goods.manufacturer %}
-            <span class="badge badge-secondary float-right">{{goods.manufacturer}}</span>
+            <span class="badge badge-secondary ">{{goods.manufacturer}}</span>
         {% else %}
-            <span class="badge badge-secondary float-right">OTHER THINGS</span>
+            <span class="badge badge-secondary ">OTHER THINGS</span>
         {% endif %}
         <!-- Post title-->
         <h1 class="fw-bolder mb-1">{{ goods.name }}</h1>
@@ -26,26 +26,36 @@
             {% endif %}
     </header>
     <!-- Preview images figure-->
-    <figure class="mb-4">
+    <div class="row">
+        <div class="col-lg-8 mb-4">
         {% if goods.image %} <!--이미지가 존재-->
             <img class="img-fluid rounded" src="{{ goods.image.url }}" alt="{{goods.name}}의 image" />
         {% else %}
             <img class="img-fluid rounded" src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random image"> <!--랜덤 이미지 / post.id로 id마다 이미지 유지-->
         {% endif %}
-    </figure>
-    <!-- Post content-->
-    <section class="mb-5">
+        </div>
+        <div class="col-lg-4">
+            <!-- Goods Info-->
+            <p>PhoneCase Name: {{goods.name}}</p>
+             <p>{{goods.brief_content}}</p>
+            <p>CaseType: {{goods.CaseType}}</p>
+            <p>country: {{goods.price}}</p>
+            <hr>
+            <p>Price: {{goods.price}}</p>
+            <p>Delivery fee: {{goods.delivery_fee}}</p>
+            <p>Total Price: </p> // 계산 수행하는 함수 만들기
+        </div>
+    </div>
+    <section>
+        <!-- Goods content-->
         <p>{{ goods.get_content_markdown | safe }}</p>
-            {% if goods.tags.exists %}
-                <i class="fas fa-tags"></i>
-                {% for tag in post.tags.all %}
-                    <a href="tag.get_absolute_url"><span class="badge badge-light">{{ tag }}</span></a>
-                {% endfor %}
-                <br/><br/>
-            {% endif %}
     </section>
+
+
 </div>
-<!-- Comments section-->
+<!--상품 문의 -->
+<hr>
+<p>상품 문의 및 Q&A</p>
 <div class="mb-5" id="comment-area">
     <div class="card bg-light">
         <div class="card-body">
@@ -56,7 +66,7 @@
                 <div class="form-group">
                     {{ comment_form | crispy }}
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary float-right">Submit</button>
             </form>
             {% else %}
             <a role="botton" class="btn btn-outline-dark" href="#"

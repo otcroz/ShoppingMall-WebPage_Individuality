@@ -10,10 +10,45 @@
 </head>
 <body>
 
+<header class="py-3 mt-3 pt-5" style="background-color:blue">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Individuality</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Phone Case Shop</p>
+        </div>
+    </div>
+</header>
+
 {% include 'shoppingmall/navbar.html'%}
 <section>
     <div class="container mt-3 pt-5">
-        <div class="row">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> <!--대문 페이지-->
+              <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+              </ol>
+              <div class="carousel-inner">
+                    <div class="carousel-item active" data-interval="5000">
+                      <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-interval="5000">
+                      <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-interval="5000">
+                      <img src="..." class="d-block w-100" alt="...">
+                    </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+        </div>
+        <div class="row"><!--회사 소개 페이지-->
             <div class="col-12">
                 <h1 class="mt-5">Individuality</h1>
                 <p>Individuality, 케이스로 나의 개성을 담다. </p>
@@ -22,9 +57,12 @@
             {% for goods in recent_goods %}
             <div class="card mt-4 col-4" >
                 <div class="card-body">
-                    <img class="card-img-top" src="{{goods.image.url}}" alt="{{ p }}의 image">
-                    <h6><a href="{{goods.get_absolute_url}}" class="text-decoration-none text-dark h5">{{ goods.name | upper }}</a></h6>
-                    <h6 class="text-muted float-bottm">{{ goods.price }} won</h6>
+                    <a href="{{goods.get_absolute_url}}" class="text-decoration-none text-dark h5">
+                        <img class="card-img-top" src="{{goods.image.url}}" alt="{{ p }}의 image">
+                        <h5>{{ goods.name | upper }}</h5>
+                        <h6 class="card-text">{{ goods.brief_content }}</h6>
+                        <h5 class="text-muted float-bottom">{{ goods.price }} won</h5>
+                    </a>
                 </div>
             </div>
             {% endfor %}
