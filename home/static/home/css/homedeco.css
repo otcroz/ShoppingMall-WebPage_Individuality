@@ -1,0 +1,17 @@
+
+@keyframes colorChange{
+    0%{
+        background-color: rgb(151, 106, 226);
+    }
+    50%{
+        background-color: rgb(185, 227, 157);
+    }
+    100%{
+        background-color: rgb(151, 106, 226);
+    }
+}
+
+.landing_background{
+    background-image:
+
+}

@@ -1,0 +1,14 @@
+
+.hr_style {
+    border: solid 4px black;
+}
+
+.detail_title_style{
+    font-weight:700;
+    color:rgb(151,107,226);
+}
+
+.detail_semi_title{
+    font-weight:700;
+    font-size:20px;
+}

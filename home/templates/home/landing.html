@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>Individuality</title>
     <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen"> <!--부트스트랩 적용 / static / screen -->
-    <link href="{% static 'home/css/landing.css' %}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{% static 'home/css/homedeco.css' %}" rel="stylesheet" type="text/css" media="screen">
     <script src="https://kit.fontawesome.com/c0877d7688.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<header class="py-3 mt-3 pt-5" style="background-color:blue">
+<header class="py-3 mt-3 pt-5" style="background-color:rgb(69,67,72)">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Individuality</h1>
@@ -55,7 +55,8 @@
                 <h2>New Goods!</h2>
             </div>
             {% for goods in recent_goods %}
-            <div class="card mt-4 col-4" >
+            <div class="col-4">
+            <div class="card mt-4">
                 <div class="card-body">
                     <a href="{{goods.get_absolute_url}}" class="text-decoration-none text-dark h5">
                         <img class="card-img-top" src="{{goods.image.url}}" alt="{{ p }}의 image">
@@ -64,6 +65,7 @@
                         <h5 class="text-muted float-bottom">{{ goods.price }} won</h5>
                     </a>
                 </div>
+            </div>
             </div>
             {% endfor %}
             </div>

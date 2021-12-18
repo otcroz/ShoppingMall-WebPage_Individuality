@@ -3,31 +3,52 @@ from django.shortcuts import render, redirect
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView  # CBV 형식
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Goods, PhoneModel, Manufacturer, CaseType
+from .models import Goods, PhoneModel, Manufacturer, CaseType, Comment
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 # Create your views here.
-def new_comment(request, pk):
-    if request.user.is_authenticated:
-        goods = get_object_or_404(Goods, pk=pk)
-        if request.method == 'POST' :
-            comment_form = CommentForm(request.POST)
-            if comment_form.is_valid():
-                comment = comment_form.save(commit=False)
-                comment.goods = goods
-                comment.author = request.user
-                comment.save()
-                return redirect(comment.get_absolute_url())
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
         else:
-            return redirect(goods.get_absolute_url())
+            raise PermissionDenied
+
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    goods = comment.goods
+    if request.user.is_authenticated and request.user == comment.author:
+        comment.delete()
+        return redirect(goods.get_absolute_url())
     else:
         raise PermissionDenied
 
+def new_comment(request, pk):
+    if request.user.is_authenticated:
+        if request.user.is_authenticated:
+            goods = get_object_or_404(Goods, pk=pk)
+
+            if request.method == 'POST':
+                comment_form = CommentForm(request.POST)
+                if comment_form.is_valid():
+                    comment = comment_form.save(commit=False)
+                    comment.goods = goods
+                    comment.author = request.user
+                    comment.save()
+                    return redirect(comment.get_absolute_url())
+            else:
+                return redirect(goods.get_absolute_url())
+        else:
+            raise PermissionDenied
+
 class GoodsUpdate(LoginRequiredMixin, UpdateView):  # 모델명_form
     model = Goods
-    fields = ['name', 'image', 'price', 'delivery_fee', 'content', 'manufacturer', 'PhoneModel', 'country']
+    fields = ['name', 'image', 'price', 'delivery_fee', 'brief_content', 'content', 'manufacturer', 'PhoneModel', 'country']
 
     template_name = 'shoppingmall/goods_update_form.html'  # PostCreate와 기본 설정 이름이 동일하기에 따로 설정한다.
 
@@ -65,7 +86,7 @@ class GoodsUpdate(LoginRequiredMixin, UpdateView):  # 모델명_form
 
 class GoodsCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Goods
-    fields = ['name', 'image', 'price', 'delivery_fee', 'content', 'manufacturer', 'PhoneModel', 'country']
+    fields = ['name', 'image', 'price', 'delivery_fee', 'brief_content', 'content', 'manufacturer', 'PhoneModel', 'country']
 
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff
@@ -142,7 +163,9 @@ def category_page(request, slug):
                   {
                       'goods_list': goods_list,
                       'manufacturers': Manufacturer.objects.all(),
-                      'manufacturer': manufacturer
+                      'manufacturer': manufacturer,
+                      'casetypes': CaseType.objects.all(),
+                      'no_casetype_goods_count': Goods.objects.filter(case_type=None).count(),
                   }
                   )
 
@@ -159,13 +182,14 @@ def casetype_page(request, slug):
                       'goods_list': goods_list,
                       'casetypes': CaseType.objects.all(),
                       'no_casetype_goods_count': Goods.objects.filter(case_type=None).count(),
-                      'casetype': casetype
+                      'casetype': casetype,
+                      'manufacturers': Manufacturer.objects.all(),
                   }
                   )
 
 def tag_page(request, slug):
     phonemodel = PhoneModel.objects.get(slug=slug)
-    goods_list = phonemodel.post_set.all()  # Post.objects.filter(tags=tag)
+    goods_list = phonemodel.post_set.all()
 
     return render(request, 'goods/goods_list.html',
                   {

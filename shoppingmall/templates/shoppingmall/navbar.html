@@ -1,10 +1,14 @@
 {% load socialaccount %}
 
+{% load static %}
+
 <!--navbar-->
 <div class="container">
 <nav class=" navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="/">INDIVIDUALITY</a>
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'shoppingmall/images/logo.png'%}" width="200px">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,10 +36,10 @@
                     <a class="nav-link" href="/mypage">
                         {% if user.socialaccount_set.all.0.get_avatar_url %} <!--0번째에 해당하는 소셜 아바타-->
                         <img class="rounded-circle" width="25px"
-                            src="{{user.socialaccount_set.all.0.get_avatar_url}}">
+                            src="{{user.socialaccount_set.all.0.get_avatar_url}}" alt="">
                         {% else %}
                         <img class="rounded-circle" width="25px"
-                             src="https://doitdjango.com/avatar/id/389/0bb9b17cd7ab4167/svg/{{user.email}}/">
+                             src="https://doitdjango.com/avatar/id/389/0bb9b17cd7ab4167/svg/{{ user.username }}/">
                         {% endif %}
                         {{ user.username }}'s MYPAGE
                     </a>
@@ -66,12 +70,20 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class="row px-2">
+            <div class="row px-2"> <!--login website-->
                 <a role="button" class="btn btn-outline-dark btn-block btn-sm"
                 href="{% provider_login_url 'google' %}">
                     <i class="fab fa-google"></i>&nbsp;&nbsp;Log In with Google
                 </a>
-                <a rloe="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login/"><i class="far fa-envelope"></i>&nbsp;&nbsp;Log in with E-mail</a>
+                <a role="button" class="btn btn-outline-secondary btn-block btn-sm" href="{% provider_login_url 'facebook' %}">
+                   <i class="fab fa-kakao"></i>&nbsp;&nbsp;Log In with FaceBook
+                </a>
+                <a role="button" class="btn btn-outline-success btn-block btn-sm" href="{% provider_login_url 'naver' %}">
+                   <i class="fab fa-naver"></i>&nbsp;&nbsp;Log In with Naver
+                </a>
+                <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login/">
+                    <i class="far fa-envelope"></i>&nbsp;&nbsp;Log in with E-mail
+                </a>
             </div>
         </div>
         <div class="modal-footer">

@@ -6,10 +6,8 @@ import os
 
 
 # Create your models here.
-
-
-class CaseType(models.Model):  # 케이스 종류 / 카테고리
-    type = models.CharField(max_length=50, unique=True)  # unique=True: 동일한 이름의 카테고리가 등록되지 않도록
+class CaseType(models.Model):  # 케이스 종류 / 다대일 관계
+    type = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
     def __str__(self):
@@ -17,8 +15,6 @@ class CaseType(models.Model):  # 케이스 종류 / 카테고리
 
     def get_absolute_url(self):
         return f'/goods/casetype/{self.slug}'
-
-
 
 
 class Manufacturer(models.Model): # 제조사(브랜드) / 다대일 관계
@@ -51,10 +47,10 @@ class PhoneModel(models.Model): # 기종 / 다대다 관계
 class Goods(models.Model): # 상품
     name = models.CharField(max_length=50)  # 이름
     image = models.ImageField(upload_to='blog/images/', blank=True) # 이미지
-    price = models.CharField(max_length=15)  # 가격
+    price = models.IntegerField()  # 가격
 
     case_type = models.ForeignKey(CaseType, null=True, on_delete=models.SET_NULL, blank=True)  # 케이스 종류
-    delivery_fee = models.CharField(max_length=15, blank=True)  # 배송비
+    delivery_fee = models.IntegerField(blank=True)  # 배송비
     brief_content = models.CharField(max_length=100) # 간단한 내용(내용 요약)
     content = MarkdownxField() # 내용
 
@@ -84,19 +80,18 @@ class Comment(models.Model): # 댓글
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.author}::{self.content}'
 
     def get_absolute_url(self):
-        return f'{self.goods.get_absolute_url()}#comment-{self.pk}/'
+        return f'{self.goods.get_absolute_url()}#comment-{self.pk}'
 
     def get_avatar_url(self):
         if self.author.socialaccount_set.exists():
             return self.author.socialaccount_set.first().get_avatar_url()
         else:
-            return 'https://doitdjango.com/avatar/id/389/0bb9b17cd7ab4167/svg/{{self.author.email}}/'
-
-
+            return f'https://doitdjango.com/avatar/id/389/0bb9b17cd7ab4167/svg/{self.author.username}/'
 
 

@@ -3,25 +3,26 @@
 <html lang="ko">
 <head>
     <title>{% block category %}Goods{% endblock %}</title>
-    <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">  static / screen -->
+    <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{% static 'shoppingmall/css/goods_page.css' %}" rel="stylesheet" type="text/css" media="screen">
     <script src="https://kit.fontawesome.com/c0877d7688.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-{% include 'shoppingmall/navbar.html'%} <!--navbar 블록 적용-->
+{% include 'shoppingmall/navbar.html'%}
 
-<div class="container mt-3 pt-5">
+<div class="container mt-4 pt-5">
     <div class="row">
         <div class="col-md-4 col-lg-3">
             <!-- Search widget-->
-            <div class="card mb-4">
+            <div class="card mb-4 mt-5">
                 <div class="card-header">
                     Search
                 </div>
                 <div class="card-body">
                     <div class="input-group">
                         <input class="form-control" type="text" id="search-input" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                        <button class="btn btn-primary" id="button-search" type="button" onclick="searchPost()"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-dark" id="button-search" type="button" onclick="searchPost()"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </div>
@@ -30,23 +31,23 @@
                 <div class="card-header">Categories</div>
                 <div class="card-body">
                     <div class="row">
-                        <ul>
-                            <li>
-                                <a href="/goods/">ALL GOODS </a>  <!--전체 게시물 수-->
-                            </li>
+                        <div class="ml-4 mb-2">
+                        <a class="text-dark h3" href="/goods/">ALL GOODS </a>  <!--전체 게시물 수-->
+                        </div>
+                            <ul>
                             {% for m in manufacturers %}
                             <li>
-                                <a href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
+                                <a class="text-dark" href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
                             </li>
                             {% endfor %}
                             <hr>
                             {% for m in casetypes %}
                             <li>
-                                <a href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
+                                <a class="text-dark" href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
                             </li>
                             {% endfor %}
                             <li>
-                                <a href="http://127.0.0.1:8000/goods/casetype/no_casetype">OTHER THINGS ({{no_casetype_goods_count}})</a>
+                                <a class="text-dark" href="http://127.0.0.1:8000/goods/casetype/no_casetype">OTHER THINGS ({{no_casetype_goods_count}})</a>
                             </li>
                         </ul>
                     </div>

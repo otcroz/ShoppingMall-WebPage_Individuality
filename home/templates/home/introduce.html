@@ -12,9 +12,12 @@
 
 {% include 'shoppingmall/navbar.html'%}
 
-<section>
-    <div class="container mt-4 pt-5">
+<section class="pt-4">
+    <div class="container pt-5">
         <div class="row">
+            <div class="col-lg-4">
+                <img class="img-fluid" src="{% static '/images/black_logo.jpg' %}">
+            </div>
             <div class="col-lg-8">
                 <h2>Company Introduce</h2><br>
                 Individuality, 개성. <br>
@@ -23,9 +26,7 @@
                 저희 회사는 다양한 브랜드 디자인의 폰케이스를 판매하는 회사입니다.<br>
                 여러 브랜드가 대표하는 케이스 디자인을 이 곳에서 볼 수 있습니다.
             </div>
-            <div class="col-lg-4">
-                <img class="img-fluid" src="{% static 'home/images/my_back.png' %}">
-            </div>
+
         </div>
     </div>
 </section>
@@ -40,7 +41,6 @@
         <div class="row">
             <div class="col-4">
                 <div class="card" data-toggle="modal" data-target="#portfolio1">
-                    <img class="card-img-top" src="{% static 'single_pages/images/pycon_sy_2017.png' %}">
                     <div class="card-body">
                         <h5 class="card-title">Phone Case Statistics</h5>
                         <p>Phone Case Statistics</p>
@@ -49,19 +49,9 @@
             </div>
             <div class="col-4">
                 <div class="card" data-toggle="modal" data-target="#portfolio2">
-                    <img class="card-img-top" src="{% static 'single_pages/images/automation_python.png' %}">
                     <div class="card-body">
                         <h5 class="card-title">Brand Statistics</h5>
                         <p>Brand Static</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card" data-toggle="modal" data-target="#portfolio3">
-                    <img class="card-img-top" src="{% static 'single_pages/images/inflearn_django2.png' %}">
-                    <div class="card-body">
-                        <h5 class="card-title">파이썬으로 통계업무 자동화하기</h5>
-                        <p>Python, Django로 통계업무 자동화하기 발표</p>
                     </div>
                 </div>
             </div>
@@ -122,35 +112,9 @@
   </div>
 </div>
 
-<div class="modal fade" id="portfolio3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel3">파이썬으로 통계업무 자동화하기 </h5> <!--3-->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <div class="row">
-              <div class="col-lg-7">
-                  <img class="card-img-top" src="{% static 'single_pages/images/inflearn_django2.png' %}">
-              </div>
-              <div class="col-lg-5">
-                  <p>Python, Django로 통계업무 자동화하기 발표</p>
-              </div>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+<div class="mt-5">
 {% include 'shoppingmall/footer.html' %}
-
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

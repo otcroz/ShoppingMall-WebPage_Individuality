@@ -3,7 +3,7 @@ from shoppingmall.models import Goods
 
 # Create your views here.
 from django.shortcuts import render
-from shoppingmall.models import Goods, PhoneModel, Manufacturer, CaseType
+from shoppingmall.models import Goods, Manufacturer, CaseType
 
 
 def landing(request):
@@ -42,6 +42,8 @@ def introduce(request):
 
 def mypage(request):
     return render(request, 'home/mypage.html')
+
+
 
 
 

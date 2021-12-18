@@ -6,6 +6,7 @@ from shoppingmall.models import Goods, PhoneModel, Manufacturer, Comment, CaseTy
 admin.site.register(Goods, MarkdownxModelAdmin)
 admin.site.register(Comment)
 
+
 class CategorAdmin(admin.ModelAdmin): # 제조사
     prepopulated_fields = {'slug': ('name',)}
 
