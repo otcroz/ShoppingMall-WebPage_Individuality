@@ -13,52 +13,41 @@
 
 <div class="container mt-4 pt-5">
     <div class="row">
-        <div class="col-md-4 col-lg-3">
             <!-- Search widget-->
-            <div class="card mb-4 mt-5">
-                <div class="card-header">
-                    Search
-                </div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text" id="search-input" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                        <button class="btn btn-dark" id="button-search" type="button" onclick="searchPost()"><i class="fas fa-search"></i></button>
-                    </div>
+            <div class="float-right mb-3">
+                <div class="input-group mt-3">
+                    <input class="form-control" type="text" id="search-input" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                    <button class="btn btn-dark" id="button-search" type="button" onclick="searchPost()"><i class="fas fa-search"></i></button>
                 </div>
             </div>
+            <div class="col-12">
             <!-- Categories widget-->
-            <div class="card mb-4" id="manufacturers-card">
-                <div class="card-header">Categories</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="ml-4 mb-2">
-                        <a class="text-dark h3" href="/goods/">ALL GOODS </a>  <!--전체 게시물 수-->
-                        </div>
-                            <ul>
-                            {% for m in manufacturers %}
-                            <li>
-                                <a class="text-dark" href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
-                            </li>
-                            {% endfor %}
-                            <hr>
-                            {% for m in casetypes %}
-                            <li>
-                                <a class="text-dark" href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}})</a>
-                            </li>
-                            {% endfor %}
-                            <li>
-                                <a class="text-dark" href="http://127.0.0.1:8000/goods/casetype/no_casetype">OTHER THINGS ({{no_casetype_goods_count}})</a>
-                            </li>
-                        </ul>
+            <div class=" mb-4" id="manufacturers-card">
+                <div class="row">
+                    <div class="category_title mr-4 mb-2 col-12 h4">
+                        CATEGORY
+                    </div>
+                    <a class="all_goods h4 ml-3 mb-2 text-decoration-none" href="/goods/">ALL GOODS</a>  <!--전체 게시물 수-->
+                    <div class="col-12">
+                        {% for m in manufacturers %}
+                            <a class="category_list text-decoration-none ml-2" href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}}) &nbsp</a>
+                        {% endfor %}
+                    </div>
+                    <div class="col-12 mt-3">
+                        {% for m in casetypes %}
+                            <a class="category_list text-decoration-none ml-2" href="{{ m.get_absolute_url }}">{{m}} ({{m.goods_set.count}}) &nbsp&nbsp</a>
+                        {% endfor %}
+                            <a class="category_list text-decoration-none" href="http://127.0.0.1:8000/goods/casetype/no_casetype">OTHER THINGS ({{no_casetype_goods_count}})</a>
                     </div>
                 </div>
+                <hr class="two_stroke">
             </div>
-        </div>
-        <div class="col-md-8 col-lg-9" id='main-area'>
+        <div class="" id='main-area'> <!--목록이 보이는 영역-->
             {% block main_area %}
             {% endblock %}
         </div>
     </div>
+</div>
 </div>
 
 <!--search 검색 기능-->

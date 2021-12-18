@@ -31,10 +31,27 @@ def introduce(request):
     brand_earpearp = Goods.objects.filter(manufacturer=cnt_earpearp).count()
     brand_168cm = Goods.objects.filter(manufacturer=cnt_168cm).count()
     brand_theninemall = Goods.objects.filter(manufacturer=cnt_thenine).count()
+
+    # 차트 목록에 대한 함수
+#    case_list = []
+#    manu_list = []
+#    manufacturer = CaseType.objects.get(type=type)
+#    manufacturer_all = Goods.objects.filter(case_type=manufacturer)
+#    casetype = CaseType.objects.get(type=type)
+#    casetype_all = CaseType.objects.filter(case_type=casetype)
+#    manufacturer_all = Manufacturer.objects.all()
+#    char_list = manufacturer_all.objects
+
+#    for m in manufacturer_all:
+#        manu_list.append(str(m))
+#    for c in casetype_all:
+#        case_list.append(str(c))
     
     manufacturer_list_chart = [brand_earpearp, brand_168cm, brand_theninemall]
     return render(request, 'home/introduce.html',
                   {
+                    #'case_list' : case_list,
+                    #'manu_list' : manu_list,
                     'case_list_chart': case_list_chart,
                     'manufacturer_list_chart' : manufacturer_list_chart,
                   }

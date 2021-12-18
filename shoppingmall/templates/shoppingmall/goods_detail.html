@@ -7,13 +7,14 @@
 
 {% block main_area %}
 <!-- Post content--> <!--포스트 하나의 내용-->
-<div id="post-area">
+<div class="mx-4" id="post-area">
     <!-- Post header-->
     <span class="badge badge-secondary">{{goods.manufacturer}}</span>
     <header class="mb-4 row">
         <!-- Post title-->
             <div class="col-sm-8 col-lg-9">
                 <h1 class="fw-bolder mb-1 h2 detail_title_style">{{ goods.name }}</h1>
+                <p class="text-secondary">{{goods.brief_content}}</p>
             </div>
             <div class="col-sm-4 col-lg-3">
                 {% if user.is_authenticated and user == goods.author %}
@@ -25,40 +26,72 @@
                 {% endif %}
             </div>
     </header>
-    <!-- Preview images figure-->
     <div class="row">
-        <div class="col-lg-7 mb-4">
+        <div class="col-lg-6 mb-4">
         {% if goods.image %} <!--이미지가 존재-->
-            <img class="img-fluid rounded" src="{{ goods.image.url }}" alt="{{goods.name}}의 image" />
+            <img class="img-fluid rounded float-right" src="{{ goods.image.url }}" alt="{{goods.name}}의 image" />
         {% else %}
-            <img class="img-fluid rounded" src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random image"> <!--랜덤 이미지 / post.id로 id마다 이미지 유지-->
+            <img class="img-fluid rounded"  src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random image">
         {% endif %}
         </div>
-        <div class="col-lg-5">
-            <!-- Goods Info-->
-            <p><span class="detail_semi_title">PhoneCase Name<br></span> <span style="color:red">{{goods.name}}</span></p>
-            <p>{{goods.brief_content}}</p>
-            <p><span class="detail_semi_title">CaseType:</span> {{goods.case_type}}</p>
-            <p>country: {{goods.country}}</p>
-            <hr class="hr_style">
-            <p><span class="detail_semi_title">Price:</span> {{goods.price}}</p>
-            <p><span class="detail_semi_title">Delivery fee:</span> {{goods.delivery_fee}}</p>
-            <p id="sum"> </p> // 계산 수행하는 함수 만들기//
+        <div class="col-lg-6">
+            <div class="row mb-2">
+                <div class="col-4 detail_semi_title">Price</div>
+                <div class="col-8 mt-1 detail_semi_content">{{goods.price}}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 detail_semi_title">Delivery fee</div>
+                <div class="col-8 detail_semi_content">{{goods.delivery_fee}}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 detail_semi_title">Case Type</div>
+                <div class="col-8 detail_semi_content">{{goods.case_type}}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 detail_semi_title">Manufacturer</div>
+                <div class="col-8 detail_semi_content">{{goods.manufacturer}}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 detail_semi_title">Country</div>
+                <div class="col-8 detail_semi_content">{{goods.country}}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 detail_semi_title">Phone Model</div>
+                <div class="col-8 detail_semi_content">
+                    <form>
+                        <select id="model">
+                            {% for m in goods.PhoneModel.all %}
+                            <option value="{{m}}">{{m}}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="row mb-2"> <!-- Goods price sum-->
+                <hr class="col-11 two_stroke my-4">
+                <div class="col-5 detail_semi_title mt-2" style="font-size:30px;color:rgb(151,107,226)">TOTAL PRICE</div>
+                <p id="sum" class="col-7 detail_semi_title" style="font-size:40px"> </p>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4 mt-3"><div class="btn btn-success col-12 px-2 py-2">BUY IT NOW</div></div>
+                <div class="col-4 mt-3"><div class="btn btn-dark col-12 px-2 py-2">ADD TO KART</div></div>
+                <div class="col-4 mt-3"><div class="btn btn-dark col-12 px-2 py-2">ADD TO WISH</div></div>
+            </div>
         </div>
+    </div>
     </div>
     <br><br>
     <hr class="hr_style">
     <br><br>
-    <section>
+    <section class="mx-2">
         <!-- Goods content-->
         <p>{{ goods.get_content_markdown | safe }}</p>
     </section>
-
-
 </div>
+
 <!--상품 문의 -->
-<hr>
-<h3>상품 문의 및 Q&A</h3>
+<hr class="hr_style">
+<h3 style="font-size:30px; font-weight:700">상품 문의 및 Q&A</h3>
 <div class="mb-5 mt-3" id="comment-area">
     <div class="card bg-light">
         <div class="card-body">
@@ -86,7 +119,7 @@
             {% for comment in goods.comment_set.all %}
             <div class="d-flex mt-3 mb-2" id="comment-{{comment.pk}}">
                 <div class="flex-shrink-0">
-                    <img class="rounded-circle" src="{{ comment.get_avatar_url }}" alt="{{ comment.author }}" width="60px" />
+                    <img class="rounded-circle ml-2" src="{{ comment.get_avatar_url }}" alt="{{ comment.author }}" width="60px" />
                 </div>
                 <div class="media-body">
                      {% if user.is_authenticated and comment.author == user %}
@@ -126,11 +159,13 @@
                         </div>
                     </div>
                     {% endif %}
+                    <div class="ml-2">
                     <h5 class="fw-bold">
                         {{comment.author.username}} &nbsp;&nbsp;&nbsp;
                         <small class="text-muted">{{comment.created_at}}</small>
                     </h5>
                     <p>{{ comment.content | linebreaks }}</p>
+                    </div>
                     {% if user.is_authenticated and comment.author == user %}
                         {% if comment.created_at != comment.modified_at %}
                             <p class="text-muted float-right"><small>Updated: {{ comment.modified_at }}</small></p>
@@ -144,20 +179,14 @@
     </div>
 </div>
 </div>
-{% endblock %}
 
 <script>
-
-var sumsum = document.getElementById('sum');
-
-function haha(){
-    fee = {{goods.price}};
-    price = {{goods.delivery_fee}};
-    sum = fee + price;
-
-    return sum;
-}
-
-sumsum.innerHTML("Total Sum:" + haha());
-
+    let total_field = document.getElementById('sum');
+    let price = parseInt({{goods.price}});
+    let delivery_fee = parseInt({{goods.delivery_fee}});
+    let sum = price + delivery_fee;
+    total_field.innerHTML = sum + " won";
 </script>
+
+{% endblock %}
+

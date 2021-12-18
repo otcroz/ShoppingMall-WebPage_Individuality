@@ -29,11 +29,11 @@
 {% if goods_list.exists %}
     <div class="row mb-3">
 {% for p in goods_list %} <!--post_list 대신 object_list 사용해도 됨 / 모델명_list-->
-        <div class="col-sm-6 col-lg-4">
-            <div class=" mb-4 h-75"  id="goods-{{p.pk}}">
+        <div class=" col-sm-6 col-lg-4">
+            <div class="mb-4 h-75"  id="goods-{{p.pk}}">
                 <a class="text-decoration-none text-dark" href="{{ p.get_absolute_url }}">
                 {% if p.image %}
-                    <img class="card-img-top" src="{{ p.image.url }}"  alt="{{ p }}의 image" /><!--실제로는 업로드한 이미지가 보여짐-->
+                    <img class="card-img-top " style="height:350px" src="{{ p.image.url }}"  alt="{{ p }}의 image" /><!--실제로는 업로드한 이미지가 보여짐-->
                 {% else %}
                     <img class="card-img-top" src="https://picsum.photos/seed/{{p.id}}/800/200" alt="random image" /> <!--p.id로 고유한 값을 줌, 아이디에 대한 이미지 고정-->
                 {% endif %}
@@ -42,7 +42,6 @@
                     <h3 class="card-title h6 text-success font-weight-bold">{{ p.name | upper }}</h3>
                     <p class="card-text">{{ p.brief_content }}</p> <!--truncatewords:45 : 45개 단어 출력-->
                     <h6 class="card-text text-muted float-bottom h4">{{ p.price }} won</h6>
-
                 </div>
                 </a>
             </div>

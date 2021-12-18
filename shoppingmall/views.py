@@ -118,6 +118,7 @@ class GoodsList(ListView):
     ordering = '-pk'
     paginate_by = 9
 
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(GoodsList, self).get_context_data()
         context['manufacturers'] = Manufacturer.objects.all()
@@ -135,6 +136,7 @@ class GoodsDetail(DetailView):
         context['manufacturers'] = Manufacturer.objects.all()
         context['casetypes'] = CaseType.objects.all()
         context['no_casetype_goods_count'] = Goods.objects.filter(case_type=None).count()
+        context['phone_models'] = PhoneModel.objects.all()
         context['comment_form'] = CommentForm
 
         return context

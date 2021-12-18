@@ -12,3 +12,40 @@
     font-weight:700;
     font-size:20px;
 }
+
+.detail_semi_content{
+    font-size:20px;
+}
+
+.category_title{
+    background-color:black;
+    color:white;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.category_list{
+    font-size: 20px;
+    color: black;
+    font-weight:700;
+}
+
+.category_list:hover{
+    color: rgb(98,125,81)
+}
+
+.all_goods{
+    color: rgb(151,107,226);
+    padding: 10px;
+}
+
+.all_goods:hover{
+    color: rgb(98,125,81);
+    padding: 10px;
+}
+
+
+.two_stroke{
+    border: solid 2px black;
+    padding: 0; 2px; 0; 2px;
+}
