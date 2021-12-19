@@ -1,8 +1,14 @@
-
+/*hr 적용*/
 .hr_style {
     border: solid 4px black;
 }
 
+.two_stroke{
+    border: solid 2px black;
+    padding: 0; 2px; 0; 2px;
+}
+
+/*상세 페이지에서 사용한 css*/
 .detail_title_style{
     font-weight:700;
     color:rgb(151,107,226);
@@ -17,11 +23,13 @@
     font-size:20px;
 }
 
+/*카테고리*/
 .category_title{
     background-color:black;
     color:white;
     padding-top:10px;
     padding-bottom:10px;
+    text-align:center;
 }
 
 .category_list{
@@ -44,8 +52,9 @@
     padding: 10px;
 }
 
-
-.two_stroke{
-    border: solid 2px black;
-    padding: 0; 2px; 0; 2px;
+/*박스*/
+.title_box{
+     border: solid 3px black;
+     padding: 10px;
+     text-align:center;
 }

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>ShoppingMall Introduce</title>
-    <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen"> <!--부트스트랩 적용 / static / screen -->
+    <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{% static 'shoppingmall/css/goods_page.css' %}" rel="stylesheet" type="text/css" media="screen">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://kit.fontawesome.com/c0877d7688.js" crossorigin="anonymous"></script>
 </head>
@@ -18,13 +19,13 @@
             <div class="col-lg-4">
                 <img class="img-fluid" src="{% static '/images/black_logo.jpg' %}">
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-8 h5">
                 <h2>Company Introduce</h2><br>
                 Individuality, 개성. <br>
                 폰케이스로 나의 개성을 담다. <br><br>
 
-                저희 회사는 다양한 브랜드 디자인의 폰케이스를 판매하는 회사입니다.<br>
-                여러 브랜드가 대표하는 케이스 디자인을 이 곳에서 볼 수 있습니다.
+                저희 회사는 다양한 브랜드의 폰케이스를 판매하는 회사입니다.<br>
+                각 브랜드의 다양한 디자인의 케이스를 이 곳에서 볼 수 있습니다.
             </div>
 
         </div>
@@ -34,16 +35,16 @@
 <section class="margin-for-footer">
     <div class="container mt-4">
         <div class="row">
-            <div class="col-12">
-                <h1>Statistics</h1>
+            <div class="col-12 mb-2">
+                <div class="title_box h2" style="text-align:left">Statistics</div>
             </div>
         </div>
         <div class="row">
             <div class="col-4">
                 <div class="card" data-toggle="modal" data-target="#portfolio1">
                     <div class="card-body">
-                        <h5 class="card-title">Phone Case Statistics</h5>
-                        <p>Phone Case Statistics</p>
+                        <h5 class="card-title">Phone Case Type Statistics</h5>
+                        <p>Phone Case Type Statistics</p>
                     </div>
                 </div>
             </div>
@@ -52,6 +53,14 @@
                     <div class="card-body">
                         <h5 class="card-title">Brand Statistics</h5>
                         <p>Brand Static</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card" data-toggle="modal" data-target="#portfolio3">
+                    <div class="card-body">
+                        <h5 class="card-title">Entering the store</h5>
+                        <p>Entering the store list</p>
                     </div>
                 </div>
             </div>
@@ -112,6 +121,36 @@
   </div>
 </div>
 
+<div class="modal fade" id="portfolio3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel3">Entering the store</h5> <!--2-->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              {% for manu in manufacturers %}
+              <div class="col-lg-6 mb-3">
+                  <div class="h5 text-info">{{ manu.name }}</div>
+                  <div>Address: {{ manu.address }}</div>
+                  <div>Contact: {{ manu.contact }}</div>
+                  <div>Homepage: {{ manu.homepage }}</div>
+                  <div>Email: {{ manu.email }}</div>
+                  <hr>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="mt-5">
 {% include 'shoppingmall/footer.html' %}
 </div>
@@ -121,12 +160,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
 
 <script>
-       console.log({{case_list}})
-       data = {
-        labels: {{case_list}},
+    var case_list = [
+       {% for c in casetypes %}
+            "{{c.type}}",
+        {% endfor %}
+    ]
+
+        data = {
+        labels: case_list,
         datasets: [{
             labels: '# of Votes',
-            data: {{case_list_chart}},
+            data: {{case_count}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -155,11 +199,16 @@
     });
     </script>
     <script>
+    var manufacturer_list = [
+           {% for m in manufacturers %}
+        "{{m.name}}",
+        {% endfor %}
+    ]
         data = {
-        labels: ['Earpearp', '168cm', 'The Nine Mall'],
+        labels: manufacturer_list,
         datasets: [{
             label: '# of Votes',
-            data: {{manufacturer_list_chart}},
+            data: {{manu_count}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

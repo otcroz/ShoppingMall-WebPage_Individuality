@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-{% load static %} <!--css,js는 정적 파일임 -> static 폴더를 만들고 정적파일을 넣어준다. / 앱 폴더 > static > 앱 이름 > 파일 넣기 -->
+{% load static %}
 <html lang="ko">
 <head>
-    <title>{% block head_title %}Blog{% endblock %}</title> <!--포스트 title 이름 적용 / head_title 블록이 명시되어 있지 않으면 Blog 이름을 사용-->
-    <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen"> <!--부트스트랩 적용 / static / screen -->
+    <title>{% block head_title %}Blog{% endblock %}</title>
+    <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">
     <script src="https://kit.fontawesome.com/c0877d7688.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-{% include 'shoppingmall/navbar.html'%} <!--navbar 블록 적용-->
+{% include 'shoppingmall/navbar.html'%}
 
-<div class="container mt-3 pt-5"> <!--navBar에 의해 글이 가려질 때 pt-5 주기--> <!--또는 .css 파일 사용-->
+<div class="container mt-3 pt-5">
     <div class="row">
-        <div class="col-12" id='main-area'> <!--id='main-area인 div'-->
-            {% block main_area %} <!--블록 적용-->
+        <div class="col-12" id='main-area'>
+            {% block main_area %}
             {% endblock %}
         </div>
     </div>
 </div>
 
-{% include 'shoppingmall/footer.html' %} <!--footer 블록 적용-->
+{% include 'shoppingmall/footer.html' %}
 
 <!--js에 대한 부트스트랩 적용-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

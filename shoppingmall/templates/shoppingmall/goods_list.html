@@ -39,8 +39,9 @@
                 {% endif %}
                 <div class="card-body">
                     <span class="badge badge-secondary mb-2">{{p.manufacturer}}</span>
+                    <span class="badge badge-warning mb-2 text-light">{{p.case_type}}</span>
                     <h3 class="card-title h6 text-success font-weight-bold">{{ p.name | upper }}</h3>
-                    <p class="card-text">{{ p.brief_content }}</p> <!--truncatewords:45 : 45개 단어 출력-->
+                    <p class="card-text">{{ p.brief_content }}</p>
                     <h6 class="card-text text-muted float-bottom h4">{{ p.price }} won</h6>
                 </div>
                 </a>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Individuality</title>
     <link href="{% static 'shoppingmall/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen"> <!--부트스트랩 적용 / static / screen -->
-    <link href="{% static 'home/css/homedeco.css' %}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{% static 'shoppingmall/css/goods_page.css' %}" rel="stylesheet" type="text/css" media="screen">
     <script src="https://kit.fontawesome.com/c0877d7688.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -28,15 +28,15 @@
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
               </ol>
-              <div class="carousel-inner">
+              <div class="carousel-inner mb-4">
                     <div class="carousel-item active" data-interval="5000">
-                      <img src="..." class="d-block w-100" alt="...">
+                      <img src="{% static '/images/landing_1.jpg' %}" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item" data-interval="5000">
-                      <img src="..." class="d-block w-100" alt="...">
+                      <img src="{% static '/images/landing_2.jpg' %}" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item" data-interval="5000">
-                      <img src="..." class="d-block w-100" alt="...">
+                      <img src="{% static '/images/landing_3.jpg' %}" class="d-block w-100" alt="...">
                     </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -49,10 +49,9 @@
               </a>
         </div>
         <div class="row"><!--회사 소개 페이지-->
+            <div class="col-12 h5 my-5 font-italic" style="text-align:center">"나의 individuality를 케이스에 담다."<br>Individuality는 다양한 디자인의 케이스 상품을 판매하는 쇼핑몰입니다.</div>
             <div class="col-12">
-                <h1 class="mt-5">Individuality</h1>
-                <p>Individuality, 케이스로 나의 개성을 담다. </p>
-                <h2>New Goods!</h2>
+                <div class="title_box h2">NEW GOODS!</div>
             </div>
             {% for goods in recent_goods %}
             <div class="col-4">
@@ -60,9 +59,9 @@
                 <div class="card-body">
                     <a href="{{goods.get_absolute_url}}" class="text-decoration-none text-dark h5">
                         <img class="card-img-top" src="{{goods.image.url}}" alt="{{ p }}의 image">
-                        <h5>{{ goods.name | upper }}</h5>
+                        <h5 class="text-success mt-2">{{ goods.name | upper }}</h5>
                         <h6 class="card-text">{{ goods.brief_content }}</h6>
-                        <h5 class="text-muted float-bottom">{{ goods.price }} won</h5>
+                        <h5 class="text-muted float-bottom h4">{{ goods.price }} won</h5>
                     </a>
                 </div>
             </div>

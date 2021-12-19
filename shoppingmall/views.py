@@ -48,7 +48,7 @@ def new_comment(request, pk):
 
 class GoodsUpdate(LoginRequiredMixin, UpdateView):  # 모델명_form
     model = Goods
-    fields = ['name', 'image', 'price', 'delivery_fee', 'brief_content', 'content', 'manufacturer', 'PhoneModel', 'country']
+    fields = ['name', 'image', 'price', 'delivery_fee', 'case_type', 'brief_content', 'content', 'manufacturer', 'PhoneModel', 'country']
 
     template_name = 'shoppingmall/goods_update_form.html'  # PostCreate와 기본 설정 이름이 동일하기에 따로 설정한다.
 
@@ -86,7 +86,7 @@ class GoodsUpdate(LoginRequiredMixin, UpdateView):  # 모델명_form
 
 class GoodsCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Goods
-    fields = ['name', 'image', 'price', 'delivery_fee', 'brief_content', 'content', 'manufacturer', 'PhoneModel', 'country']
+    fields = ['name', 'image', 'price', 'delivery_fee', 'brief_content', 'case_type', 'content', 'manufacturer', 'PhoneModel', 'country']
 
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff
@@ -94,21 +94,8 @@ class GoodsCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):  # 폼 처리
         current_user = self.request.user
         if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
-            form.instance.author = current_user  # author 필드값을 부여
-            response = super(GoodsCreate, self).form_valid(form)
-            tags_str = self.request.POST.get('tags_str')
-            if tags_str:
-                tags_str = tags_str.strip()
-                tags_str = tags_str.replace(',', ';')
-                tags_list = tags_str.split(';')
-                for t in tags_list:
-                    t = t.strip()
-                    tag, is_tag_created = PhoneModel.objects.get_or_create(name=t)
-                    if is_tag_created:
-                        tag.slug = slugify(t, allow_unicode=True)
-                        tag.save()
-                    self.object.tags.add(tag)
-            return response
+            form.instance.author = current_user
+            return super(GoodsCreate, self).form_valid(form)
         else :
             return redirect('/goods/')
 
