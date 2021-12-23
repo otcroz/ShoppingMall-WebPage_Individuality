@@ -31,7 +31,7 @@ class Manufacturer(models.Model): # 제조사(브랜드) / 다대일 관계
     def get_absolute_url(self):
         return f'/goods/manufacturer/{self.slug}'
 
-    class Meta:  # 모델의 이름 수정
+    class Meta:
         verbose_name_plural = 'Manufacturers'
 
 class PhoneModel(models.Model): # 기종 / 다대다 관계
@@ -66,13 +66,13 @@ class Goods(models.Model): # 상품
     class Meta:
         verbose_name_plural = 'Goods'
 
-    def __str__(self):  # 게시글 제목
-        return f'[{self.manufacturer}] {self.name}'  # primary_key, 제목
+    def __str__(self):
+        return f'[{self.manufacturer}] {self.name}'
 
     def get_absolute_url(self):
         return f'/goods/{self.pk}/'
 
-    def get_content_markdown(self):  # content 내용을 markdowm으로 변경
+    def get_content_markdown(self):
         return markdown(self.content)
 
 class Comment(models.Model): # 댓글

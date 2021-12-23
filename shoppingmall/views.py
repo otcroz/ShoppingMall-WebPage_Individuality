@@ -46,20 +46,20 @@ def new_comment(request, pk):
         else:
             raise PermissionDenied
 
-class GoodsUpdate(LoginRequiredMixin, UpdateView):  # 모델명_form
+class GoodsUpdate(LoginRequiredMixin, UpdateView):
     model = Goods
     fields = ['name', 'image', 'price', 'delivery_fee', 'case_type', 'brief_content', 'content', 'manufacturer', 'PhoneModel', 'country']
 
-    template_name = 'shoppingmall/goods_update_form.html'  # PostCreate와 기본 설정 이름이 동일하기에 따로 설정한다.
+    template_name = 'shoppingmall/goods_update_form.html'
 
-    def dispatch(self, request, *args, **kwargs): # get과 post(접근 방법)를 구분
+    def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated  and request.user == self.get_object().author:
             return super(GoodsUpdate, self).dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(GoodsUpdate, self).get_context_data() # super가 가지고 있는 것을 상송
+        context = super(GoodsUpdate, self).get_context_data()
         if self.object.PhoneModel.exists():
             tags_str_list = list()
             for t in self.object.PhoneModel.all():
@@ -67,9 +67,9 @@ class GoodsUpdate(LoginRequiredMixin, UpdateView):  # 모델명_form
             context['tag_str_default'] = '; '.join(tags_str_list)
         return context
 
-    def form_valid(self, form):  # 태그 처리
+    def form_valid(self, form):
         response = super(GoodsUpdate, self).form_valid(form)
-        self.object.PhoneModel.clear()  # 기존의 태그 지움
+        self.object.PhoneModel.clear()
         tags_str = self.request.POST.get('tags_str')
         if tags_str:
             tags_str = tags_str.strip()

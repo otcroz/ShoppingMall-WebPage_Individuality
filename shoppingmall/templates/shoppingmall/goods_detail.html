@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main_area %}
-<!-- Post content--> <!--포스트 하나의 내용-->
+<!-- Post content-->
 <div class="mx-4" id="post-area">
     <!-- Post header-->
     <span class="badge badge-secondary">{{goods.manufacturer}}</span>
@@ -28,7 +28,7 @@
     </header>
     <div class="row">
         <div class="col-lg-6 mb-4">
-        {% if goods.image %} <!--이미지가 존재-->
+        {% if goods.image %}
             <img class="img-fluid rounded float-right" src="{{ goods.image.url }}" alt="{{goods.name}}의 image" />
         {% else %}
             <img class="img-fluid rounded"  src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random image">

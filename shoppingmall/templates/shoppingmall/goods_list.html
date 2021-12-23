@@ -28,7 +28,7 @@
 
 {% if goods_list.exists %}
     <div class="row mb-3">
-{% for p in goods_list %} <!--post_list 대신 object_list 사용해도 됨 / 모델명_list-->
+{% for p in goods_list %}
         <div class=" col-sm-6 col-lg-4">
             <div class="mb-4 h-75"  id="goods-{{p.pk}}">
                 <a class="text-decoration-none text-dark" href="{{ p.get_absolute_url }}">
@@ -49,7 +49,7 @@
         </div>
 {% endfor %}
     </div>
-{% else %} <!--post_list가 존재하지 않을 때-->
+{% else %}
     <h2>아직 게시물이 없습니다.</h2>
 {% endif %}
 

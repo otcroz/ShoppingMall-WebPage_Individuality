@@ -7,9 +7,9 @@ from shoppingmall.models import Goods, Manufacturer, CaseType
 
 
 def landing(request):
-    recent_goods = Goods.objects.order_by('-pk')[:6]
+    recent_goods = Goods.objects.order_by('-pk')[:3]
     return render(request, 'home/landing.html',
-                  {'recent_goods': recent_goods})   # html 파일과 연결
+                  {'recent_goods': recent_goods})
 
 def introduce(request):
     manufacturers = Manufacturer.objects.all()

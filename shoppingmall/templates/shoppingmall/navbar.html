@@ -30,11 +30,11 @@
                     <a class="nav-link" href="/introduce/">Introduce</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto"> <!--ml-auto 왼쪽 margin을 최대로-->
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     {% if user.is_authenticated %}
                     <a class="nav-link" href="/mypage">
-                        {% if user.socialaccount_set.all.0.get_avatar_url %} <!--0번째에 해당하는 소셜 아바타-->
+                        {% if user.socialaccount_set.all.0.get_avatar_url %}
                         <img class="rounded-circle" width="25px"
                             src="{{user.socialaccount_set.all.0.get_avatar_url}}" alt="">
                         {% else %}
